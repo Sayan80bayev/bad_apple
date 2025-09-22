@@ -3,6 +3,14 @@ import sys
 import time
 import shutil
 
+
+def resource_path(relative_path):
+    """Get absolute path to resource, works for dev and for PyInstaller."""
+    if hasattr(sys, "_MEIPASS"):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
+
 def scale_frame(frame_lines, max_cols, max_rows):
     """Rescale ASCII frame to fit inside terminal (max_cols × max_rows)."""
     from math import floor
@@ -33,6 +41,12 @@ def scale_frame(frame_lines, max_cols, max_rows):
 
 def play_ascii_frames(frame_dir="frames", fps=30):
     """Play pre-generated ASCII frames from text files, scaled & centered in the terminal."""
+    frame_dir = resource_path(frame_dir)
+
+    if not os.path.isdir(frame_dir):
+        print("Frame directory not found:", frame_dir)
+        return
+
     frame_files = sorted(f for f in os.listdir(frame_dir) if f.endswith(".txt"))
     if not frame_files:
         print("No ASCII frames found in", frame_dir)
