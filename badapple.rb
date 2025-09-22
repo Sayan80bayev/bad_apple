@@ -6,6 +6,7 @@ class Badapple < Formula
   license "MIT"
 
   def install
-    bin.install "badapple"
+      libexec.install Dir["*"]
+      bin.write_exec_script (libexec/"badapple")
   end
 end
