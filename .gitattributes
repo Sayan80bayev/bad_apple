@@ -1,0 +1,2 @@
+build/bad-apple/bad-apple.pkg filter=lfs diff=lfs merge=lfs -text
+dist/bad-apple filter=lfs diff=lfs merge=lfs -text
